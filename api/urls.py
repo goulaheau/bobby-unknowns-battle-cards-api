@@ -18,5 +18,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', include('bobby_unknowns_battle_cards.urls'))
+    url(r'^', include('app.urls'))
 ]
