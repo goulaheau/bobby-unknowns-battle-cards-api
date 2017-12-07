@@ -1,6 +1,7 @@
-from app.models import Deck, Player, Card
+from app.models import Deck, Player,Card
 from rest_framework import viewsets
-from app.serializers import DeckSerializer, PlayerSerializer
+from app.serializers import DeckSerializer, PlayerSerializer, CardSerializer
+
 
 class DeckViewSet(viewsets.ModelViewSet):
     """
@@ -16,3 +17,10 @@ class PlayerViewSet(viewsets.ModelViewSet):
     """
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
+
+class CardViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows Player to be viewed or edited.
+    """
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer

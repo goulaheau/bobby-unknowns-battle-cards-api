@@ -19,17 +19,11 @@ from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from app import views
 
-player_detail = views.PlayerViewSet.as_view({
-    'get': 'details',
-})
-
-# player_list = views.PlayerViewSet.as_view({
-#     'get': 'liste',
-# })
 router = DefaultRouter()
 router.register(r'decks', views.DeckViewSet)
 router.register(r'players', views.PlayerViewSet)
-# router.register(r'cards', views.CardViewSet)
+router.register(r'cards', views.CardViewSet)
+
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
