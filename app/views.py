@@ -11,7 +11,7 @@ class DeckViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows Deck to be viewed or edited.
     """
-    queryset = Deck.objects.all().order_by('-date_joined')
+    queryset = Deck.objects.all()
     serializer_class = DeckSerializer
 
 
@@ -40,3 +40,20 @@ class CustomObtainAuthToken(ObtainAuthToken):
 
         return Response({'token': token.key,
                          'user': UserSerializer(token.user).data})
+
+
+class Game:
+    player1 = {}
+    player2 = {}
+
+    def start_game(self, request, player1):
+        self.player1.mana_cristals = 0;
+        self.player1.health = 30
+
+        self.player2.mana_cristals = 0;
+        self.player2.health = 30
+
+        self.choose_deck(player)
+
+    # def choose_deck(player):
+        
