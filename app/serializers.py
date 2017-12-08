@@ -1,4 +1,4 @@
-from app.models import Deck, Player, Card
+from app.models import Deck, User, Card
 from rest_framework import serializers
 
 
@@ -11,15 +11,13 @@ class DeckSerializer(serializers.ModelSerializer):
         )
 
 
-class PlayerSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Player
+        model = User
         fields = (
             'id',
-            'user',
             'name',
-            'health',
-            'mana_cristals'
+            'decks'
         )
 
 

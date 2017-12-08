@@ -1,7 +1,7 @@
 from django.contrib import admin
-from app.models import Deck,Player,Card
+from app.models import Deck, User, Card
 
 # Register your models here.
 admin.site.register(Deck)
-admin.site.register(Player)
+admin.site.register(User)
 admin.site.register(Card)

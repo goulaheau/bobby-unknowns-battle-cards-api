@@ -1,9 +1,9 @@
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.conf import settings
+from rest_framework.authtoken.models import Token
 
 
 # This code is triggered whenever a new user has been created and saved
@@ -43,12 +43,9 @@ class Deck(models.Model):
         return self.name
 
 
-class Player(models.Model):
-    user = models.ForeignKey(User, default=None)
-    name = models.CharField(max_length=5)
-    health = models.IntegerField(default=30)
-    # current_deck = models.ForeignKey(Deck, on_delete=models.CASCADE, null=True, default=None)
-    mana_cristals = models.IntegerField(default=1)
+class User(AbstractUser):
+    name = models.CharField(max_length=15)
+    decks = models.ManyToManyField(Deck)
 
     def __str__(self):
-        return self.name
+        return self.username

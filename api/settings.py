@@ -82,6 +82,8 @@ CORS_ALLOW_HEADERS = (
     'token-type'
 )
 
+AUTH_USER_MODEL = 'app.User'
+
 ROOT_URLCONF = 'api.urls'
 
 TEMPLATES = [

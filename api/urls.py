@@ -16,21 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from rest_framework.routers import DefaultRouter
-from app import views
-
-router = DefaultRouter()
-router.register(r'decks', views.DeckViewSet)
-router.register(r'players', views.PlayerViewSet)
-router.register(r'cards', views.CardViewSet)
-
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    url(r'^', include(router.urls)),
     url(r'^', include('app.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^api-auth/',
+    url(r'^api-admin/',
         include('rest_framework.urls', namespace='rest_framework'))
 ]
 
