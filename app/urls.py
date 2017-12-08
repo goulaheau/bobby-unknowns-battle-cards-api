@@ -1,5 +1,7 @@
 from django.conf.urls import url
 
-urlpatterns = [
+from app.views import CustomObtainAuthToken
 
+urlpatterns = [
+    url(r'^authenticate/', CustomObtainAuthToken.as_view()),
 ]

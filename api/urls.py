@@ -24,15 +24,13 @@ router.register(r'decks', views.DeckViewSet)
 router.register(r'players', views.PlayerViewSet)
 router.register(r'cards', views.CardViewSet)
 
-
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^', include('app.urls')),
+    url(r'^admin/', admin.site.urls),
+    url(r'^api-auth/',
+        include('rest_framework.urls', namespace='rest_framework'))
 ]
 
-from rest_framework.authtoken import views
-urlpatterns += [
-    url(r'^api-token-auth/', views.obtain_auth_token)
-]
