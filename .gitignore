@@ -2,3 +2,4 @@
 db.sqlite3
 app/__pycache__
 bobby-unknowns-battle-cards-api.iml
+app/migrations
