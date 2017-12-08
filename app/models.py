@@ -26,11 +26,11 @@ class CardType(models.Model):
 class Card(models.Model):
     name = models.CharField(max_length=50)
     cost = models.IntegerField(default=1)
-    picture = models.CharField(default=None, max_length=255, null=True)
+    picture = models.CharField(max_length=255, null=True, blank=True)
     type = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
-    health = models.IntegerField(default=None, null=True)
-    strengh = models.IntegerField(default=None, null=True)
-    effect = models.CharField(max_length=100, default=None, null=True)
+    health = models.IntegerField(null=True)
+    strengh = models.IntegerField(null=True)
+    effect = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return self.name
@@ -38,7 +38,7 @@ class Card(models.Model):
 
 class Deck(models.Model):
     name = models.CharField(max_length=50)
-    cards = models.ForeignKey(Card, on_delete=models.DO_NOTHING)
+    cards = models.ManyToManyField(Card)
 
     def __str__(self):
         return self.name
