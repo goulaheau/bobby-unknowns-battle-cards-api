@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'django_filters'
+    'django_filters',
+    'channels',
 ]
 
 REST_FRAMEWORK = {
@@ -85,6 +86,13 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
     'token-type'
 )
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "app.routing.channel_routing",
+    },
+}
 
 AUTH_USER_MODEL = 'app.User'
 
