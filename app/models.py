@@ -35,17 +35,18 @@ class Card(models.Model):
         return self.name
 
 
+class User(AbstractUser):
+    name = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.username
+
+
 class Deck(models.Model):
     name = models.CharField(max_length=50)
     cards = models.ManyToManyField(Card)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
-
-class User(AbstractUser):
-    name = models.CharField(max_length=15)
-    decks = models.ManyToManyField(Deck)
-
-    def __str__(self):
-        return self.username

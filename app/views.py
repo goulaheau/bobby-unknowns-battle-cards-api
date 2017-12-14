@@ -13,6 +13,7 @@ class DeckViewSet(viewsets.ModelViewSet):
     """
     queryset = Deck.objects.all()
     serializer_class = DeckSerializer
+    filter_fields = ('name', 'cards', 'user',)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -53,7 +54,7 @@ class Game:
         self.player2.mana_cristals = 0;
         self.player2.health = 30
 
-        self.choose_deck(player)
+        # self.choose_deck(player)
 
     # def choose_deck(player):
-        
+

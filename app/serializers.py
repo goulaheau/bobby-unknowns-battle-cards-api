@@ -7,7 +7,8 @@ class DeckSerializer(serializers.ModelSerializer):
         model = Deck
         fields = (
             'name',
-            'cards'
+            'cards',
+            'user'
         )
 
 
@@ -16,8 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id',
-            'name',
-            'decks'
+            'name'
         )
 
 
