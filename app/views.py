@@ -13,7 +13,7 @@ class DeckViewSet(viewsets.ModelViewSet):
     """
     queryset = Deck.objects.all()
     serializer_class = DeckSerializer
-    filter_fields = ('name', 'cards', 'user',)
+    filter_fields = ('id', 'name', 'cards', 'user',)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -22,6 +22,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_fields = ('id', 'username',)
 
 
 class CardViewSet(viewsets.ModelViewSet):
@@ -30,6 +31,7 @@ class CardViewSet(viewsets.ModelViewSet):
     """
     queryset = Card.objects.all()
     serializer_class = CardSerializer
+    filter_fields = ('id', 'name', 'cost', 'type', 'health', 'strengh', 'effect',)
 
 
 class CustomObtainAuthToken(ObtainAuthToken):
@@ -57,4 +59,3 @@ class Game:
         # self.choose_deck(player)
 
     # def choose_deck(player):
-
