@@ -60,6 +60,13 @@ REST_FRAMEWORK = {
     )
 }
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "app.routing.channel_routing",
+    },
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -86,13 +93,6 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
     'token-type'
 )
-
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgiref.inmemory.ChannelLayer",
-        "ROUTING": "app.routing.channel_routing",
-    },
-}
 
 AUTH_USER_MODEL = 'app.User'
 

@@ -1,5 +1,6 @@
 from app.models import *
 
+
 # Register your models here.
 admin.site.register(Deck, DeckAdmin)
 admin.site.register(User, UserAdmin)

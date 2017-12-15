@@ -1,6 +1,9 @@
 from channels.routing import route
 
+from app.consumers import ws_connect, ws_receive, ws_disconnect
+
 channel_routing = [
-    # Customize routes used for sockets
-    route("test", "app.consumers.http_consumer"),
+    route('websocket.connect', ws_connect),
+    route('websocket.receive', ws_receive),
+    route('websocket.disconnect', ws_disconnect),
 ]

@@ -7,15 +7,13 @@ from rest_framework.authtoken.models import Token
 from django.contrib import admin
 
 
-# This code is triggered whenever a new user has been created and saved
-# to the database
+# Triggered whenever a new user has been created and saved to the DB
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
 
 
-# Create your models here.
 class CardType(models.Model):
     name = models.CharField(max_length=20, default='Monster')
 
@@ -111,3 +109,4 @@ class gameInfosAdmin(admin.ModelAdmin):
     list_display = ['winner', 'loser', 'nbRound', 'startGame', 'endGame']
     list_filter = ['winner', 'loser']
     ordering = ['winner']
+
