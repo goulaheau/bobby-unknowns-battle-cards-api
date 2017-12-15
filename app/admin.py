@@ -4,5 +4,5 @@ from app.models import *
 admin.site.register(Deck, DeckAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Card, CardAdmin)
-admin.site.register(CardEffect)
+admin.site.register(CardEffect, CardEffectAdmin)
 admin.site.register(CardType)

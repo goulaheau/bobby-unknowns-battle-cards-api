@@ -32,6 +32,11 @@ class CardEffect(models.Model):
     def __str__(self):
         return self.name
 
+class CardEffectAdmin(admin.ModelAdmin):
+    list_display = ('name',  'typeAffected', 'nbDmg')
+    list_filter = ['nbDmg', 'typeAffected']
+    ordering = ['name']
+
 class Card(models.Model):
     name = models.CharField(max_length=50)
     cost = models.IntegerField(default=1)
