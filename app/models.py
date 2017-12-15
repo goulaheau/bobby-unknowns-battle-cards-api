@@ -27,6 +27,7 @@ class CardEffect(models.Model):
     typeAffected = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
     nbMaxAffectCard = models.IntegerField()
     nbAffectTurn = models.IntegerField()
+    nbDmg = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -34,11 +35,11 @@ class CardEffect(models.Model):
 class Card(models.Model):
     name = models.CharField(max_length=50)
     cost = models.IntegerField(default=1)
-    picture = models.CharField(max_length=255, null=True, blank=True)
+    picture = models.ImageField(upload_to='card_images',default='media/default.png')
     type = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
     health = models.IntegerField(null=True)
     strengh = models.IntegerField(null=True)
-    effect = models.CharField(max_length=100, null=True)
+    effect = models.ForeignKey(CardEffect, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name

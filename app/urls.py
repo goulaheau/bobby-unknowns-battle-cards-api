@@ -12,3 +12,4 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^auth/', views.CustomObtainAuthToken.as_view()),
 ]
+
