@@ -97,4 +97,17 @@ class UserAdmin(admin.ModelAdmin):
          )
     )
 
+class gameInfos(models.Model):
+    winner = models.OneToOneField(User, related_name='user_who_won', on_delete=models.CASCADE)
+    loser = models.OneToOneField(User, related_name='user_who_lose', on_delete=models.CASCADE)
+    nbRound = models.IntegerField()
+    startGame = models.DateTimeField()
+    endGame = models.DateTimeField()
 
+    def __str__(self):
+        return self.winner
+
+class gameInfosAdmin(admin.ModelAdmin):
+    list_display = ['winner', 'loser', 'nbRound', 'startGame', 'endGame']
+    list_filter = ['winner', 'loser']
+    ordering = ['winner']
