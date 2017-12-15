@@ -22,6 +22,14 @@ class CardType(models.Model):
     def __str__(self):
         return self.name
 
+class CardEffect(models.Model):
+    name = models.CharField(max_length=50)
+    typeAffected = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
+    nbMaxAffectCard = models.IntegerField()
+    nbAffectTurn = models.IntegerField()
+
+    def __str__(self):
+        return self.name
 
 class Card(models.Model):
     name = models.CharField(max_length=50)
