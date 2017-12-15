@@ -39,7 +39,7 @@ class Card(models.Model):
     type = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
     health = models.IntegerField(null=True)
     strengh = models.IntegerField(null=True)
-    effect = models.ForeignKey(CardEffect, on_delete=models.CASCADE, default=1)
+    effect = models.ForeignKey(CardEffect, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -58,6 +58,17 @@ class Deck(models.Model):
     def __str__(self):
         return self.name
 
+    def get_cards(self):
+        return ", ".join([str(p) for p in self.cards.all()])
+
+
+class DeckAdmin(admin.ModelAdmin):
+    list_display = ('name',  'user', 'get_cards')
+    list_filter = ['name']
+    ordering = ['name']
+
+    def author_first_name(self, obj):
+        return obj.author.first_name
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'id', 'last_login', 'is_staff', 'is_active', 'is_superuser']
@@ -75,4 +86,5 @@ class UserAdmin(admin.ModelAdmin):
             'fields': ['decks']}
          )
     )
+
 
