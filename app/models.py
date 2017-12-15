@@ -44,6 +44,11 @@ class Card(models.Model):
     def __str__(self):
         return self.name
 
+class CardAdmin(admin.ModelAdmin):
+    list_display = ('name',  'cost', 'effect')
+    list_filter = ['effect', 'type', 'cost']
+    ordering = ['name']
+
 
 class User(AbstractUser):
     def __str__(self):
