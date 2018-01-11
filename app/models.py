@@ -20,6 +20,7 @@ class CardType(models.Model):
     def __str__(self):
         return self.name
 
+
 class CardEffect(models.Model):
     name = models.CharField(max_length=50)
     typeAffected = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
@@ -30,10 +31,12 @@ class CardEffect(models.Model):
     def __str__(self):
         return self.name
 
+
 class CardEffectAdmin(admin.ModelAdmin):
     list_display = ('name',  'typeAffected', 'nbDmg')
     list_filter = ['nbDmg', 'typeAffected']
     ordering = ['name']
+
 
 class Card(models.Model):
     name = models.CharField(max_length=50)
@@ -47,21 +50,16 @@ class Card(models.Model):
     def __str__(self):
         return self.name
 
+
 class CardAdmin(admin.ModelAdmin):
     list_display = ('name',  'cost', 'effect')
     list_filter = ['effect', 'type', 'cost']
     ordering = ['name']
 
 
-class User(AbstractUser):
-    def __str__(self):
-        return self.username
-
-
 class Deck(models.Model):
     name = models.CharField(max_length=50)
     cards = models.ManyToManyField(Card)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -71,12 +69,20 @@ class Deck(models.Model):
 
 
 class DeckAdmin(admin.ModelAdmin):
-    list_display = ('name',  'user', 'get_cards')
+    list_display = ('name',  'get_cards')
     list_filter = ['name']
     ordering = ['name']
 
     def author_first_name(self, obj):
         return obj.author.first_name
+
+
+class User(AbstractUser):
+    deck = models.ForeignKey(Deck, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.username
+
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'id', 'last_login', 'is_staff', 'is_active', 'is_superuser']
@@ -91,11 +97,12 @@ class UserAdmin(admin.ModelAdmin):
          ),
         ('PLAYER', {
             'description': 'Deck(s) du joueur',
-            'fields': ['decks']}
+            'fields': ['deck']}
          )
     )
 
-class gameInfos(models.Model):
+
+class Game(models.Model):
     winner = models.OneToOneField(User, related_name='user_who_won', on_delete=models.CASCADE)
     loser = models.OneToOneField(User, related_name='user_who_lose', on_delete=models.CASCADE)
     nbRound = models.IntegerField()
@@ -105,7 +112,8 @@ class gameInfos(models.Model):
     def __str__(self):
         return self.winner
 
-class gameInfosAdmin(admin.ModelAdmin):
+
+class GameAdmin(admin.ModelAdmin):
     list_display = ['winner', 'loser', 'nbRound', 'startGame', 'endGame']
     list_filter = ['winner', 'loser']
     ordering = ['winner']
