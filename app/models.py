@@ -33,7 +33,7 @@ class CardEffect(models.Model):
 
 
 class CardEffectAdmin(admin.ModelAdmin):
-    list_display = ('name',  'typeAffected', 'nbDmg')
+    list_display = ('name', 'typeAffected', 'nbDmg')
     list_filter = ['nbDmg', 'typeAffected']
     ordering = ['name']
 
@@ -41,7 +41,7 @@ class CardEffectAdmin(admin.ModelAdmin):
 class Card(models.Model):
     name = models.CharField(max_length=50)
     cost = models.IntegerField(default=1)
-    picture = models.ImageField(upload_to='card_images',default='media/default.png')
+    picture = models.ImageField(upload_to='card_images', default='media/default.png')
     type = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
     health = models.IntegerField(null=True)
     strengh = models.IntegerField(null=True)
@@ -52,7 +52,7 @@ class Card(models.Model):
 
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('name',  'cost', 'effect')
+    list_display = ('name', 'cost', 'effect')
     list_filter = ['effect', 'type', 'cost']
     ordering = ['name']
 
@@ -118,3 +118,6 @@ class GameAdmin(admin.ModelAdmin):
     list_filter = ['winner', 'loser']
     ordering = ['winner']
 
+
+# class Game(models.Model):
+#     users = models.ManyToManyField(User)
