@@ -22,6 +22,14 @@ class CardType(models.Model):
     def __str__(self):
         return self.name
 
+class CardEffect(models.Model):
+    name = models.CharField(max_length=50)
+    typeCardAffect = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
+    nbMaxCardAffect = models.IntegerField()
+    nbRoundCardAffect = models.IntegerField()
+
+    def __str__(self):
+        return self.name
 
 class Card(models.Model):
     name = models.CharField(max_length=50)
@@ -30,7 +38,7 @@ class Card(models.Model):
     type = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
     health = models.IntegerField(null=True)
     strengh = models.IntegerField(null=True)
-    effect = models.CharField(max_length=100, null=True)
+    effect = models.ForeignKey(CardEffect, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name
@@ -48,7 +56,6 @@ class Deck(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'id', 'last_login', 'is_staff', 'is_active', 'is_superuser']
