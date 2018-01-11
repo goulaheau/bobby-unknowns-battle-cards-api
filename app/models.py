@@ -21,17 +21,40 @@ class CardType(models.Model):
         return self.name
 
 
-class Card(models.Model):
+class CardEffect(models.Model):
     name = models.CharField(max_length=50)
-    cost = models.IntegerField(default=1)
-    picture = models.CharField(max_length=255, null=True, blank=True)
-    type = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
-    health = models.IntegerField(null=True)
-    strengh = models.IntegerField(null=True)
-    effect = models.CharField(max_length=100, null=True)
+    typeAffected = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
+    nbMaxAffectCard = models.IntegerField()
+    nbAffectTurn = models.IntegerField()
+    nbDmg = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
+
+
+class CardEffectAdmin(admin.ModelAdmin):
+    list_display = ('name', 'typeAffected', 'nbDmg')
+    list_filter = ['nbDmg', 'typeAffected']
+    ordering = ['name']
+
+
+class Card(models.Model):
+    name = models.CharField(max_length=50)
+    cost = models.IntegerField(default=1)
+    picture = models.ImageField(upload_to='card_images', default='media/default.png')
+    type = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
+    health = models.IntegerField(null=True)
+    strengh = models.IntegerField(null=True)
+    effect = models.ForeignKey(CardEffect, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class CardAdmin(admin.ModelAdmin):
+    list_display = ('name', 'cost', 'effect')
+    list_filter = ['effect', 'type', 'cost']
+    ordering = ['name']
 
 
 class User(AbstractUser):
@@ -46,6 +69,18 @@ class Deck(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_cards(self):
+        return ", ".join([str(p) for p in self.cards.all()])
+
+
+class DeckAdmin(admin.ModelAdmin):
+    list_display = ('name', 'user', 'get_cards')
+    list_filter = ['name']
+    ordering = ['name']
+
+    def author_first_name(self, obj):
+        return obj.author.first_name
 
 
 # class UserAdmin(admin.ModelAdmin):
@@ -64,6 +99,23 @@ class Deck(models.Model):
 #             'fields': ['decks']}
 #          )
 #     )
+
+
+class GameInfos(models.Model):
+    winner = models.OneToOneField(User, related_name='user_who_won', on_delete=models.CASCADE)
+    loser = models.OneToOneField(User, related_name='user_who_lose', on_delete=models.CASCADE)
+    nbRound = models.IntegerField()
+    startGame = models.DateTimeField()
+    endGame = models.DateTimeField()
+
+    def __str__(self):
+        return self.winner
+
+
+# class GameInfosAdmin(admin.ModelAdmin):
+#     list_display = ['winner', 'loser', 'nbRound', 'startGame', 'endGame']
+#     list_filter = ['winner', 'loser']
+#     ordering = ['winner']
 
 
 class Game(models.Model):
