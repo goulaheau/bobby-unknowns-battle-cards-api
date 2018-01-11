@@ -69,7 +69,7 @@ class Deck(models.Model):
 
 
 class DeckAdmin(admin.ModelAdmin):
-    list_display = ('name',  'get_cards')
+    list_display = ('name', 'get_cards')
     list_filter = ['name']
     ordering = ['name']
 
@@ -93,7 +93,8 @@ class UserAdmin(admin.ModelAdmin):
     fieldsets = (
         ('USER', {
             'description': 'Propriétés du user',
-            'fields': ['username', 'password', 'email', 'last_login', 'date_joined', 'is_superuser', 'is_staff', 'is_active']}
+            'fields': ['username', 'password', 'email', 'last_login', 'date_joined', 'is_superuser', 'is_staff',
+                       'is_active']}
          ),
         ('PLAYER', {
             'description': 'Deck(s) du joueur',
@@ -102,12 +103,17 @@ class UserAdmin(admin.ModelAdmin):
     )
 
 
+class Game(models.Model):
+    users = models.ManyToManyField(User)
+
+
 class GameLog(models.Model):
     winner = models.OneToOneField(User, related_name='user_who_won', on_delete=models.CASCADE)
     loser = models.OneToOneField(User, related_name='user_who_lose', on_delete=models.CASCADE)
     nb_round = models.IntegerField()
     start_game = models.DateTimeField()
     end_game = models.DateTimeField()
+    game = models.OneToOneField(Game, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.winner
@@ -119,5 +125,8 @@ class GameLogAdmin(admin.ModelAdmin):
     ordering = ['winner']
 
 
-class Game(models.Model):
-    users = models.ManyToManyField(User)
+class ActionsLog(models.Model):
+    game_log = models.ForeignKey(GameLog, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    tour = models.IntegerField(null=False)
+    libelle = models.CharField(max_length=250)
