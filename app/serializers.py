@@ -46,22 +46,22 @@ class GameSerializer(serializers.ModelSerializer):
         ]
 
 
-        # class CardEffectSerializer(serializers.ModelSerializer):
-        #     class Meta:
-        #         model = CardEffect
-        #         fields = [
-        #             'id',
-        #             'name',
-        #             'typeAffected',
-        #             'nbMaxAffectCard',
-        #             'nbAffectTurn',
-        #             'nbDmg'
-        #         ]
-        #
-        # class CardTypeSerializer(serializers.ModelSerializer):
-        #     class Meta:
-        #         model = CardType
-        #         fields = [
-        #             'id',
-        #             'name'
-        #         ]
+# class CardEffectSerializer(serializers.ModelSerializer):
+#         class Meta:
+#             model = CardEffect
+#             fields = [
+#                 'id',
+#                 'name',
+#                 'type_affected',
+#                 'nb_max_affectCard',
+#                 'nb_affect_turn',
+#                 'nb_dmg'
+#             ]
+#
+# class CardTypeSerializer(serializers.ModelSerializer):
+#         class Meta:
+#             model = CardType
+#             fields = [
+#                 'id',
+#                 'name'
+#             ]

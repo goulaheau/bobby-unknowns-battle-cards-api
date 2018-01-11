@@ -23,18 +23,18 @@ class CardType(models.Model):
 
 class CardEffect(models.Model):
     name = models.CharField(max_length=50)
-    typeAffected = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
-    nbMaxAffectCard = models.IntegerField()
-    nbAffectTurn = models.IntegerField()
-    nbDmg = models.IntegerField(default=0)
+    type_affected = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
+    nb_max_affectCard = models.IntegerField()
+    nb_affect_turn = models.IntegerField()
+    nb_dmg = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
 
 
 class CardEffectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'typeAffected', 'nbDmg')
-    list_filter = ['nbDmg', 'typeAffected']
+    list_display = ('name', 'type_affected', 'nb_dmg')
+    list_filter = ['nb_dmg', 'type_affected']
     ordering = ['name']
 
 
@@ -102,22 +102,22 @@ class UserAdmin(admin.ModelAdmin):
     )
 
 
-class Game(models.Model):
+class GameLog(models.Model):
     winner = models.OneToOneField(User, related_name='user_who_won', on_delete=models.CASCADE)
     loser = models.OneToOneField(User, related_name='user_who_lose', on_delete=models.CASCADE)
-    nbRound = models.IntegerField()
-    startGame = models.DateTimeField()
-    endGame = models.DateTimeField()
+    nb_round = models.IntegerField()
+    start_game = models.DateTimeField()
+    end_game = models.DateTimeField()
 
     def __str__(self):
         return self.winner
 
 
-class GameAdmin(admin.ModelAdmin):
-    list_display = ['winner', 'loser', 'nbRound', 'startGame', 'endGame']
+class GameLogAdmin(admin.ModelAdmin):
+    list_display = ['winner', 'loser', 'nb_round', 'start_game', 'end_game']
     list_filter = ['winner', 'loser']
     ordering = ['winner']
 
 
-# class Game(models.Model):
-#     users = models.ManyToManyField(User)
+class Game(models.Model):
+    users = models.ManyToManyField(User)

@@ -9,5 +9,5 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Card, CardAdmin)
 admin.site.register(CardEffect, CardEffectAdmin)
 admin.site.register(CardType)
-admin.site.register(Game, GameAdmin)
+admin.site.register(GameLog, GameLogAdmin)
 
