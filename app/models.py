@@ -126,23 +126,23 @@ class GameLogAdmin(admin.ModelAdmin):
 
 
 class Game(models.Model):
-    owner = models.OneToOneField(
+    owner = models.ForeignKey(
         User,
         related_name='owner',
         on_delete=models.CASCADE,
     )
-    owner_deck = models.OneToOneField(
+    owner_deck = models.ForeignKey(
         Deck,
         related_name='owner_deck',
         on_delete=models.CASCADE,
     )
-    opponent = models.OneToOneField(
+    opponent = models.ForeignKey(
         User,
         related_name='opponent',
         on_delete=models.CASCADE,
         null=True,
     )
-    opponent_deck = models.OneToOneField(
+    opponent_deck = models.ForeignKey(
         Deck,
         related_name='opponent_deck',
         on_delete=models.CASCADE,
