@@ -7,8 +7,10 @@ router = DefaultRouter()
 router.register(r'decks', views.DeckViewSet)
 router.register(r'users', views.UserViewSet)
 router.register(r'cards', views.CardViewSet)
+router.register(r'games', views.GameViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^auth/', views.CustomObtainAuthToken.as_view()),
 ]
+

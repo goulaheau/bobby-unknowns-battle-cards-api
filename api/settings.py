@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'django_filters'
+    'django_filters',
+    'channels',
 ]
 
 REST_FRAMEWORK = {
@@ -57,6 +58,13 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     )
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "app.routing.channel_routing",
+    },
 }
 
 MIDDLEWARE = [
@@ -152,8 +160,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#The path that will hold uploaded files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#URL that handles the media served from MEDIA_ROOT
+MEDIA_URL = '/media/'

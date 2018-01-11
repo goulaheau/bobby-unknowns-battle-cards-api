@@ -1,20 +1,20 @@
-from app.models import Deck, User, Card
+from app.models import Deck, User, Card, Game
 from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = (
+        fields = [
             'id',
             'username'
-        )
+        ]
 
 
 class CardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Card
-        fields = (
+        fields = [
             'id',
             'name',
             'cost',
@@ -23,17 +23,48 @@ class CardSerializer(serializers.ModelSerializer):
             'health',
             'strengh',
             'effect'
-        )
+        ]
 
 
 class DeckSerializer(serializers.ModelSerializer):
-    cards = CardSerializer(many=True, read_only=True)
-
     class Meta:
         model = Deck
-        fields = (
+        fields = [
             'id',
             'name',
             'cards',
             'user'
-        )
+        ]
+
+
+class GameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = [
+            'id',
+            'owner',
+            'owner_deck',
+            'opponent',
+            'opponent_deck'
+        ]
+
+
+# class CardEffectSerializer(serializers.ModelSerializer):
+#         class Meta:
+#             model = CardEffect
+#             fields = [
+#                 'id',
+#                 'name',
+#                 'type_affected',
+#                 'nb_max_affectCard',
+#                 'nb_affect_turn',
+#                 'nb_dmg'
+#             ]
+#
+# class CardTypeSerializer(serializers.ModelSerializer):
+#         class Meta:
+#             model = CardType
+#             fields = [
+#                 'id',
+#                 'name'
+#             ]
