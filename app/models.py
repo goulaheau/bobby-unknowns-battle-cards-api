@@ -24,8 +24,8 @@ class CardType(models.Model):
 class CardEffect(models.Model):
     name = models.CharField(max_length=50)
     type_affected = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
-    nb_max_affectCard = models.IntegerField()
-    nb_affect_turn = models.IntegerField()
+    nb_max_card_affected = models.IntegerField()
+    nb_turn_duration_of_effect = models.IntegerField()
     nb_dmg = models.IntegerField(default=0)
 
     def __str__(self):
@@ -121,3 +121,17 @@ class GameLogAdmin(admin.ModelAdmin):
 
 class Game(models.Model):
     users = models.ManyToManyField(User)
+
+
+class Rules(models.Model):
+    name = models.CharField(max_length=50, default="Name of set rules")
+    card_to_pick = models.IntegerField(default=1)
+    put_card_on = models.IntegerField(default=0)
+    max_cards_on_bord = models.IntegerField(default=3)
+    max_attack_card_per_round = models.IntegerField(default=3)
+    health_pts_to_loose = models.IntegerField(default=0)
+    nb_max_cards_per_deck = models.IntegerField(default=30)
+    nb_pv_player = models.IntegerField(default=30)
+
+    def __str__(self):
+        return self.name

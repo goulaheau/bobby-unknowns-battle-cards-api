@@ -91,3 +91,21 @@ AUTH_USER_MODEL = 'app.User
     python manage.py makemigrations
     python manage.py migrate
 ```
+
+## SpecTechniques
+```
+   Rules
+   
+    Déroulement de la game 
+    carte à piocher : 1
+    carte à poser : 1 ou 0
+    carte à poser sur le tapis : 3 max
+    carte qui peuvent attaquer : carte posées sur le tapis
+    
+    Conditions de victoire/défaite
+    pv du joueur à 0
+    
+    Global
+    nombre de carte dans un deck : 30
+    pv des joueurs : 30 
+```
