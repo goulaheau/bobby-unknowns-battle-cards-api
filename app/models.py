@@ -14,6 +14,31 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 
+class User(AbstractUser):
+    def __str__(self):
+        return self.username
+
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['username', 'id', 'last_login', 'is_staff', 'is_active',
+                    'is_superuser']
+    list_filter = ['is_superuser', 'is_active', 'is_staff']
+    ordering = ['username']
+
+    # Personnalisation des champs du formulaire
+    fieldsets = (
+        ('USER', {
+            'description': 'Propriétés du user',
+            'fields': ['username', 'password', 'email', 'last_login',
+                       'date_joined', 'is_superuser', 'is_staff', 'is_active']}
+         ),
+        ('PLAYER', {
+            'description': 'Deck(s) du joueur',
+            'fields': ['deck']}
+         )
+    )
+
+
 class CardType(models.Model):
     name = models.CharField(max_length=20, default='Monster')
 
@@ -45,7 +70,11 @@ class Card(models.Model):
     type = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
     health = models.IntegerField(null=True)
     strengh = models.IntegerField(null=True)
-    effect = models.ForeignKey(CardEffect, on_delete=models.CASCADE, null=True, blank=True)
+    effect = models.ForeignKey(CardEffect,
+                               on_delete=models.CASCADE,
+                               null=True,
+                               blank=True
+                               )
 
     def __str__(self):
         return self.name
@@ -60,16 +89,14 @@ class CardAdmin(admin.ModelAdmin):
 class Deck(models.Model):
     name = models.CharField(max_length=50)
     cards = models.ManyToManyField(Card)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name
 
-    def get_cards(self):
-        return ", ".join([str(p) for p in self.cards.all()])
-
 
 class DeckAdmin(admin.ModelAdmin):
-    list_display = ('name',  'get_cards')
+    list_display = ('name', 'get_cards')
     list_filter = ['name']
     ordering = ['name']
 
@@ -77,37 +104,24 @@ class DeckAdmin(admin.ModelAdmin):
         return obj.author.first_name
 
 
-class User(AbstractUser):
-    deck = models.ForeignKey(Deck, on_delete=models.CASCADE, null=True)
-
-    def __str__(self):
-        return self.username
-
-
-class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'id', 'last_login', 'is_staff', 'is_active', 'is_superuser']
-    list_filter = ['is_superuser', 'is_active', 'is_staff']
-    ordering = ['username']
-
-    # Personnalisation des champs du formulaire
-    fieldsets = (
-        ('USER', {
-            'description': 'Propriétés du user',
-            'fields': ['username', 'password', 'email', 'last_login', 'date_joined', 'is_superuser', 'is_staff', 'is_active']}
-         ),
-        ('PLAYER', {
-            'description': 'Deck(s) du joueur',
-            'fields': ['deck']}
-         )
-    )
-
-
 class GameLog(models.Model):
-    winner = models.OneToOneField(User, related_name='user_who_won', on_delete=models.CASCADE)
-    loser = models.OneToOneField(User, related_name='user_who_lose', on_delete=models.CASCADE)
+    winner = models.OneToOneField(
+        User,
+        related_name='user_who_won',
+        on_delete=models.CASCADE
+    )
+    loser = models.OneToOneField(
+        User,
+        related_name='user_who_lose',
+        on_delete=models.CASCADE
+    )
     nb_round = models.IntegerField()
     start_game = models.DateTimeField()
     end_game = models.DateTimeField()
+    game = models.OneToOneField(
+        'Game',
+        on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.winner
@@ -120,6 +134,7 @@ class GameLogAdmin(admin.ModelAdmin):
 
 
 class Game(models.Model):
+<<<<<<< HEAD
     users = models.ManyToManyField(User)
 
 
@@ -135,3 +150,52 @@ class Rules(models.Model):
 
     def __str__(self):
         return self.name
+=======
+    turn = models.IntegerField()
+
+    owner_mana = models.IntegerField()
+    opponent_mana = models.IntegerField()
+
+    owner_deck_cards = models.ManyToManyField('Card')
+    opponent_deck_cards = models.ManyToManyField('Card')
+
+    owner_hand_cards = models.ManyToManyField('Card')
+    opponent_hand_cards = models.ManyToManyField('Card')
+
+    owner_board_cards = models.ManyToManyField('Card')
+    opponent_board_cards = models.ManyToManyField('Card')
+
+    owner_graveyard_cards = models.ManyToManyField('Card')
+    opponent_graveyard_cards = models.ManyToManyField('Card')
+
+    owner = models.ForeignKey(
+        User,
+        related_name='owner',
+        on_delete=models.CASCADE,
+    )
+    opponent = models.ForeignKey(
+        User,
+        related_name='opponent',
+        on_delete=models.CASCADE,
+        null=True,
+    )
+
+    owner_deck = models.ForeignKey(
+        Deck,
+        related_name='owner_deck',
+        on_delete=models.CASCADE,
+    )
+    opponent_deck = models.ForeignKey(
+        Deck,
+        related_name='opponent_deck',
+        on_delete=models.CASCADE,
+        null=True,
+    )
+
+
+class ActionsLog(models.Model):
+    game_log = models.ForeignKey(GameLog, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    tour = models.IntegerField(null=False)
+    libelle = models.CharField(max_length=250)
+>>>>>>> 1933218b53199bfeb13f8fff16599163bef8d4a7

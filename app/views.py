@@ -63,27 +63,27 @@ class CardViewSet(viewsets.ModelViewSet):
 
 
 class GameViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows Card to be viewed or edited.
-    """
     queryset = Game.objects.all()
     serializer_class = GameSerializer
     filter_fields = [
         'id',
-        'users'
+        'owner',
+        'owner_deck',
+        'opponent',
+        'opponent_deck'
     ]
 
 
-class Game:
-    player1 = {}
-    player2 = {}
-
-    def start_game(self, request, player1):
-        self.player1.mana_cristals = 0;
-        self.player1.health = 30
-
-        self.player2.mana_cristals = 0;
-        self.player2.health = 30
+# class Game:
+#     player1 = {}
+#     player2 = {}
+#
+#     def start_game(self, request, player1):
+#         self.player1.mana_cristals = 0;
+#         self.player1.health = 30
+#
+#         self.player2.mana_cristals = 0;
+#         self.player2.health = 30
 
         # self.choose_deck(player)
 

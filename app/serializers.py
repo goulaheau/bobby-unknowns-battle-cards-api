@@ -42,7 +42,10 @@ class GameSerializer(serializers.ModelSerializer):
         model = Game
         fields = [
             'id',
-            'users'
+            'owner',
+            'owner_deck',
+            'opponent',
+            'opponent_deck'
         ]
 
 

@@ -2,6 +2,7 @@
 db.sqlite3
 bobby-unknowns-battle-cards-api.iml
 app/migrations
+<<<<<<< HEAD
 
 # Byte-compiled / optimized / DLL files
 api/__pycache__/__init__.cpython-36.pyc
@@ -57,3 +58,6 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+=======
+api/__pycache__
+>>>>>>> 1933218b53199bfeb13f8fff16599163bef8d4a7
