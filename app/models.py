@@ -93,6 +93,9 @@ class Deck(models.Model):
     def __str__(self):
         return self.name
 
+    def get_cards(self):
+        return ", ".join([str(p) for p in self.cards.all()])
+
 
 class DeckAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cards')
@@ -119,7 +122,7 @@ class GameLog(models.Model):
     end_game = models.DateTimeField()
     game = models.OneToOneField(
         'Game',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):
@@ -133,22 +136,46 @@ class GameLogAdmin(admin.ModelAdmin):
 
 
 class Game(models.Model):
-    turn = models.IntegerField()
+    turn = models.IntegerField(null=True)
 
-    owner_mana = models.IntegerField()
-    opponent_mana = models.IntegerField()
+    owner_mana = models.IntegerField(null=True)
+    opponent_mana = models.IntegerField(null=True)
 
-    owner_deck_cards = models.ManyToManyField('Card')
-    opponent_deck_cards = models.ManyToManyField('Card')
+    owner_deck_cards = models.ManyToManyField(
+        'Card',
+        related_name='owner_deck_cards',
+    )
+    opponent_deck_cards = models.ManyToManyField(
+        'Card',
+        related_name='opponent_deck_cards',
+    )
 
-    owner_hand_cards = models.ManyToManyField('Card')
-    opponent_hand_cards = models.ManyToManyField('Card')
+    owner_hand_cards = models.ManyToManyField(
+        'Card',
+        related_name='owner_hand_cards',
+    )
+    opponent_hand_cards = models.ManyToManyField(
+        'Card',
+        related_name='opponent_hand_cards',
+    )
 
-    owner_board_cards = models.ManyToManyField('Card')
-    opponent_board_cards = models.ManyToManyField('Card')
+    owner_board_cards = models.ManyToManyField(
+        'Card',
+        related_name='owner_board_cards',
+    )
+    opponent_board_cards = models.ManyToManyField(
+        'Card',
+        related_name='opponent_board_cards',
+    )
 
-    owner_graveyard_cards = models.ManyToManyField('Card')
-    opponent_graveyard_cards = models.ManyToManyField('Card')
+    owner_graveyard_cards = models.ManyToManyField(
+        'Card',
+        related_name='owner_graveyard_cards',
+    )
+    opponent_graveyard_cards = models.ManyToManyField(
+        'Card',
+        related_name='opponent_graveyard_cards',
+    )
 
     owner = models.ForeignKey(
         User,
