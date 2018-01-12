@@ -109,3 +109,21 @@ AUTH_USER_MODEL = 'app.User
     nombre de carte dans un deck : 30
     pv des joueurs : 30 
 ```
+
+## Modèle
+```
+User
+UserAdmin
+CardType
+CardEffect
+CardEffectAdmin
+Card
+CardAdmin
+Deck
+DeckAdmin
+GameLog
+GameLogAdmin
+Rules
+Game
+ActionsLog
+```
