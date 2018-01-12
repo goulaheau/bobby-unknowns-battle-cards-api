@@ -45,6 +45,14 @@ class CardType(models.Model):
     def __str__(self):
         return self.name
 
+class CardEffect(models.Model):
+    name = models.CharField(max_length=50)
+    typeCardAffect = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
+    nbMaxCardAffect = models.IntegerField()
+    nbRoundCardAffect = models.IntegerField()
+
+    def __str__(self):
+        return self.name
 
 class CardEffect(models.Model):
     name = models.CharField(max_length=50)
@@ -72,8 +80,12 @@ class Card(models.Model):
     type = models.ForeignKey(CardType, on_delete=models.CASCADE, default=1)
     health = models.IntegerField(null=True)
     strengh = models.IntegerField(null=True)
+<<<<<<< HEAD
+    effect = models.ForeignKey(CardEffect, on_delete=models.CASCADE, default=1)
+=======
     effect = models.ForeignKey(CardEffect, on_delete=models.CASCADE, null=True,
                                blank=True)
+>>>>>>> f82567a8d9f47442be8e29928f3ed2abaaceaa85
 
     def __str__(self):
         return self.name
@@ -93,9 +105,16 @@ class Deck(models.Model):
     def __str__(self):
         return self.name
 
+<<<<<<< HEAD
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['username', 'id', 'last_login', 'is_staff', 'is_active', 'is_superuser']
+    list_filter = ['is_superuser', 'is_active', 'is_staff']
+    ordering = ['username']
+=======
     def get_cards(self):
         return ", ".join([str(p) for p in self.cards.all()])
 
+>>>>>>> f82567a8d9f47442be8e29928f3ed2abaaceaa85
 
 class DeckAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cards')
