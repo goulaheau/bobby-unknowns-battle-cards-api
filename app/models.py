@@ -107,14 +107,23 @@ class DeckAdmin(admin.ModelAdmin):
 
 
 class GameLog(models.Model):
-    winner = models.OneToOneField(User, related_name='user_who_won',
-                                  on_delete=models.CASCADE)
-    loser = models.OneToOneField(User, related_name='user_who_lose',
-                                 on_delete=models.CASCADE)
+    winner = models.OneToOneField(
+        User,
+        related_name='user_who_won',
+        on_delete=models.CASCADE
+    )
+    loser = models.OneToOneField(
+        User,
+        related_name='user_who_lose',
+        on_delete=models.CASCADE
+    )
     nb_round = models.IntegerField()
     start_game = models.DateTimeField()
     end_game = models.DateTimeField()
-    game = models.OneToOneField(Game, on_delete=models.CASCADE)
+    game = models.OneToOneField(
+        'Game',
+        on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.winner
@@ -127,14 +136,26 @@ class GameLogAdmin(admin.ModelAdmin):
 
 
 class Game(models.Model):
+    turn = models.IntegerField()
+
+    owner_mana = models.IntegerField()
+    opponent_mana = models.IntegerField()
+
+    owner_deck_cards = models.ManyToManyField('Card')
+    opponent_deck_cards = models.ManyToManyField('Card')
+
+    owner_hand_cards = models.ManyToManyField('Card')
+    opponent_hand_cards = models.ManyToManyField('Card')
+
+    owner_board_cards = models.ManyToManyField('Card')
+    opponent_board_cards = models.ManyToManyField('Card')
+
+    owner_graveyard_cards = models.ManyToManyField('Card')
+    opponent_graveyard_cards = models.ManyToManyField('Card')
+
     owner = models.ForeignKey(
         User,
         related_name='owner',
-        on_delete=models.CASCADE,
-    )
-    owner_deck = models.ForeignKey(
-        Deck,
-        related_name='owner_deck',
         on_delete=models.CASCADE,
     )
     opponent = models.ForeignKey(
@@ -142,6 +163,12 @@ class Game(models.Model):
         related_name='opponent',
         on_delete=models.CASCADE,
         null=True,
+    )
+
+    owner_deck = models.ForeignKey(
+        Deck,
+        related_name='owner_deck',
+        on_delete=models.CASCADE,
     )
     opponent_deck = models.ForeignKey(
         Deck,
