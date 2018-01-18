@@ -58,6 +58,4 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
-=======
-api/__pycache__
->>>>>>> 1933218b53199bfeb13f8fff16599163bef8d4a7
+api/__pycache__]

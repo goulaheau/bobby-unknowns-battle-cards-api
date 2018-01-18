@@ -19,7 +19,6 @@ from .user import User
 from .user_admin import UserAdmin
 
 
-
 # Triggered whenever a new user has been created and saved to the DB
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):

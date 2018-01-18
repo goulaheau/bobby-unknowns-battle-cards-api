@@ -42,10 +42,21 @@ class GameSerializer(serializers.ModelSerializer):
         model = Game
         fields = [
             'id',
+            'owner_mana',
+            'opponent_mana',
+            'player_turn',
+            'owner_deck_cards',
+            'opponent_deck_cards',
+            'owner_hand_cards',
+            'opponent_hand_cards',
+            'owner_board_cards',
+            'opponent_board_cards',
+            'owner_graveyard_cards',
+            'opponent_graveyard_cards',
             'owner',
-            'owner_deck',
             'opponent',
-            'opponent_deck'
+            'owner_deck',
+            'opponent_deck',
         ]
 
 
@@ -61,6 +72,7 @@ class CardEffectSerializer(serializers.ModelSerializer):
                 'nb_dmg'
             ]
 
+
 class CardTypeSerializer(serializers.ModelSerializer):
         class Meta:
             model = CardType
@@ -68,6 +80,7 @@ class CardTypeSerializer(serializers.ModelSerializer):
                 'id',
                 'name'
             ]
+
 
 class GameLogSerializer(serializers.ModelSerializer):
     class Meta:
@@ -79,6 +92,7 @@ class GameLogSerializer(serializers.ModelSerializer):
             'start_game'
             'end_game'
         ]
+
 
 class RulesSerializer(serializers.ModelSerializer):
     class Meta:
