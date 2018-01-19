@@ -1,6 +1,6 @@
 import json
 from channels import Group
-from app.models import Game
+from app.models import Game, User
 from .game import action_switcher
 
 
@@ -11,9 +11,10 @@ def ws_connect(message, game_id, user_id):
 
 def ws_receive(message, game_id, user_id):
     game = Game.objects.get(id=game_id)
+    user = User.objects.get(id=user_id)
     event = json.loads(message.content['text'])
 
-    res = action_switcher(game, event['action'], event['payload'])
+    res = action_switcher(game, user, event['action'], event['payload'])
 
     Group(game_id).send({
         'text': json.dumps(res)

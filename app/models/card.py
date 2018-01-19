@@ -8,11 +8,12 @@ class Card(models.Model):
     type = models.ForeignKey('CardType', on_delete=models.CASCADE, default=1)
     health = models.IntegerField(null=True)
     strengh = models.IntegerField(null=True)
-    effect = models.ForeignKey('CardEffect',
-                               on_delete=models.CASCADE,
-                               null=True,
-                               blank=True
-                               )
+    effect = models.ForeignKey(
+        'CardEffect',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.name

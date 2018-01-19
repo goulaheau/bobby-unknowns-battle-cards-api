@@ -14,6 +14,7 @@ from .deck_admin import DeckAdmin
 from .game import Game
 from .game_log import GameLog
 from .game_log_admin import GameLogAdmin
+from .card_values import CardValues
 from .rules import Rules
 from .user import User
 from .user_admin import UserAdmin

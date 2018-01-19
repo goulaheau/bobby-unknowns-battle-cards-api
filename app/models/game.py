@@ -35,42 +35,42 @@ class Game(models.Model):
     owner_deck_cards = models.ManyToManyField(
         'Card',
         related_name='owner_deck_cards',
-        null=True
+        blank=True,
     )
     opponent_deck_cards = models.ManyToManyField(
         'Card',
         related_name='opponent_deck_cards',
-        null=True
+        blank=True,
     )
     owner_hand_cards = models.ManyToManyField(
         'Card',
         related_name='owner_hand_cards',
-        null=True
+        blank=True,
     )
     opponent_hand_cards = models.ManyToManyField(
         'Card',
         related_name='opponent_hand_cards',
-        null=True
+        blank=True,
     )
     owner_board_cards = models.ManyToManyField(
-        'Card',
+        'CardValues',
         related_name='owner_board_cards',
-        null=True
+        blank=True,
     )
     opponent_board_cards = models.ManyToManyField(
-        'Card',
+        'CardValues',
         related_name='opponent_board_cards',
-        null=True
+        blank=True,
     )
     owner_graveyard_cards = models.ManyToManyField(
         'Card',
         related_name='owner_graveyard_cards',
-        null=True
+        blank=True,
     )
     opponent_graveyard_cards = models.ManyToManyField(
         'Card',
         related_name='opponent_graveyard_cards',
-        null=True
+        blank=True,
     )
 
     def __str__(self):

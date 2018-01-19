@@ -22,3 +22,6 @@ class GameLog(models.Model):
 
     def __str__(self):
         return self.winner
+
+    class Meta:
+        db_table = 'app_game_log'
