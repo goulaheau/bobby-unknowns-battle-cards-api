@@ -1,6 +1,6 @@
 import random
 
-from app.models import Card, CardValues
+from app.models import Card, CardValue
 
 
 def action_switcher(game, user, action, payload):
@@ -67,15 +67,15 @@ def action_play_card(game, user, payload):
         if success:
             game.owner_hand_cards.remove(card_to_play)
 
-            card_values = CardValues(
+            card_value = CardValue(
                 user=user,
                 card=card_to_play,
                 strength=card_to_play.strength,
                 health=card_to_play.health,
             )
-            card_values.save()
+            card_value.save()
 
-            game.owner_board_cards.add(card_values)
+            game.owner_board_cards.add(card_value)
 
             game.save()
     else:
@@ -89,15 +89,15 @@ def action_play_card(game, user, payload):
         if success:
             game.opponent_hand_cards.remove(card_to_play)
 
-            card_values = CardValues(
+            card_value = CardValue(
                 user=user,
                 card=card_to_play,
                 strength=card_to_play.strength,
                 health=card_to_play.health,
             )
-            card_values.save()
+            card_value.save()
 
-            game.opponent_board_cards.add(card_values)
+            game.opponent_board_cards.add(card_value)
 
             game.save()
 
@@ -119,7 +119,7 @@ def action_attack(game, user, payload):
         try:
             attacker = game.owner_board_cards.get(id=payload['attacker'])
             victim = game.opponent_board_cards.get(id=payload['victim'])
-        except CardValues.DoesNotExist:
+        except CardValue.DoesNotExist:
             success = False
 
         if success:
@@ -144,7 +144,7 @@ def action_attack(game, user, payload):
         try:
             attacker = game.opponent_board_cards.get(id=payload['attacker'])
             victim = game.owner_board_cards.get(id=payload['victim'])
-        except CardValues.DoesNotExist:
+        except CardValue.DoesNotExist:
             success = False
 
         if success:
