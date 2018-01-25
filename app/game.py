@@ -123,8 +123,8 @@ def action_attack(game, user, payload):
             success = False
 
         if success:
-            victim.health = victim.health - attacker.strengh
-            attacker.health = attacker.health - victim.strengh
+            victim.health -= attacker.strengh
+            attacker.health -= victim.strengh
 
             if attacker.health <= 0:
                 game.owner_board_cards.remove(attacker)
