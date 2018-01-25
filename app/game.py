@@ -53,8 +53,8 @@ def action_init(game, user, payload):
 
 
 def action_play_card(game, user, payload):
-    global card_to_play
     success = True
+    card_to_play = None
 
     if user.id == game.owner.id:
         try:
@@ -75,7 +75,7 @@ def action_play_card(game, user, payload):
             )
             card_value.save()
 
-            game.owner_board_cards.add(card_value)
+            game.owner_board_card_values.add(card_value)
 
             game.save()
     else:
@@ -97,7 +97,7 @@ def action_play_card(game, user, payload):
             )
             card_value.save()
 
-            game.opponent_board_cards.add(card_value)
+            game.opponent_board_card_values.add(card_value)
 
             game.save()
 
@@ -112,13 +112,20 @@ def action_play_card(game, user, payload):
 
 
 def action_attack(game, user, payload):
-    global attacker, victim
     success = True
+    attacker = None
+    victim = None
 
     if user.id == game.owner.id:
         try:
-            attacker = game.owner_board_cards.get(id=payload['attacker'])
-            victim = game.opponent_board_cards.get(id=payload['victim'])
+            attacker = game.owner_board_card_values.get(
+                card=payload['attacker'],
+                user=game.owner.id
+            )
+            victim = game.opponent_board_card_values.get(
+                card=payload['victim'],
+                user=game.opponent.id
+            )
         except CardValue.DoesNotExist:
             success = False
 
@@ -127,14 +134,14 @@ def action_attack(game, user, payload):
             attacker.health -= victim.strength
 
             if attacker.health <= 0:
-                game.owner_board_cards.remove(attacker)
+                game.owner_board_card_values.remove(attacker)
                 game.owner_graveyard_cards.add(attacker.card)
                 game.save()
                 attacker.delete()
             else:
                 attacker.save()
             if victim.health <= 0:
-                game.opponent_board_cards.remove(victim)
+                game.opponent_board_card_values.remove(victim)
                 game.opponent_graveyard_cards.add(victim.card)
                 game.save()
                 victim.delete()
@@ -142,8 +149,14 @@ def action_attack(game, user, payload):
                 victim.save()
     else:
         try:
-            attacker = game.opponent_board_cards.get(id=payload['attacker'])
-            victim = game.owner_board_cards.get(id=payload['victim'])
+            attacker = game.opponent_board_card_values.get(
+                card=payload['attacker'],
+                user=game.opponent.id,
+            )
+            victim = game.owner_board_card_values.get(
+                card=payload['victim'],
+                user=game.owner.id,
+            )
         except CardValue.DoesNotExist:
             success = False
 
@@ -152,14 +165,14 @@ def action_attack(game, user, payload):
             attacker.health -= victim.strength
 
             if attacker.health <= 0:
-                game.opponent_board_cards.remove(attacker)
+                game.opponent_board_card_values.remove(attacker)
                 game.opponent_graveyard_cards.add(attacker.card)
                 game.save()
                 attacker.delete()
             else:
                 attacker.save()
             if victim.health <= 0:
-                game.owner_board_cards.remove(victim)
+                game.owner_board_card_values.remove(victim)
                 game.owner_graveyard_cards.add(victim.card)
                 game.save()
                 victim.delete()
