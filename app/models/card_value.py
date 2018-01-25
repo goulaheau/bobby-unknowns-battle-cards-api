@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class CardValues(models.Model):
+class CardValue(models.Model):
     user = models.ForeignKey(
         'User',
         on_delete=models.CASCADE
@@ -11,7 +11,7 @@ class CardValues(models.Model):
         on_delete=models.CASCADE,
     )
     health = models.IntegerField()
-    strengh = models.IntegerField()
+    strength = models.IntegerField()
 
     class Meta:
-        db_table = 'app_card_values'
+        db_table = 'app_card_value'

@@ -70,7 +70,7 @@ def action_play_card(game, user, payload):
             card_values = CardValues(
                 user=user,
                 card=card_to_play,
-                strengh=card_to_play.strengh,
+                strength=card_to_play.strength,
                 health=card_to_play.health,
             )
             card_values.save()
@@ -92,7 +92,7 @@ def action_play_card(game, user, payload):
             card_values = CardValues(
                 user=user,
                 card=card_to_play,
-                strengh=card_to_play.strengh,
+                strength=card_to_play.strength,
                 health=card_to_play.health,
             )
             card_values.save()
@@ -123,8 +123,8 @@ def action_attack(game, user, payload):
             success = False
 
         if success:
-            victim.health -= attacker.strengh
-            attacker.health -= victim.strengh
+            victim.health -= attacker.strength
+            attacker.health -= victim.strength
 
             if attacker.health <= 0:
                 game.owner_board_cards.remove(attacker)
@@ -148,8 +148,8 @@ def action_attack(game, user, payload):
             success = False
 
         if success:
-            victim.health = victim.health - attacker.strengh
-            attacker.health = attacker.health - victim.strengh
+            victim.health -= attacker.strength
+            attacker.health -= victim.strength
 
             if attacker.health <= 0:
                 game.opponent_board_cards.remove(attacker)

@@ -21,20 +21,20 @@ class CardSerializer(serializers.ModelSerializer):
             'picture',
             'type',
             'health',
-            'strengh',
+            'strength',
             'effect'
         ]
 
 
-class CardValuesSerializer(serializers.ModelSerializer):
+class CardValueSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CardValues
+        model = CardValue
         fields = [
             'id',
             'user',
             'card',
             'health',
-            'strengh'
+            'strength'
         ]
 
 
@@ -106,9 +106,9 @@ class GameLogSerializer(serializers.ModelSerializer):
         ]
 
 
-class RulesSerializer(serializers.ModelSerializer):
+class RuleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Rules
+        model = Rule
         fields = [
             'name',
             'card_to_pick',

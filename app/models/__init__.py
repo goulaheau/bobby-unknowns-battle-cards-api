@@ -3,7 +3,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
-from .actions_log import ActionsLog
 from .card import Card
 from .card_admin import CardAdmin
 from .card_effect import CardEffect
@@ -13,9 +12,10 @@ from .deck import Deck
 from .deck_admin import DeckAdmin
 from .game import Game
 from .game_log import GameLog
+from .game_log_action import GameLogAction
 from .game_log_admin import GameLogAdmin
-from .card_values import CardValues
-from .rules import Rules
+from .card_value import CardValue
+from .rule import Rule
 from .user import User
 from .user_admin import UserAdmin
 

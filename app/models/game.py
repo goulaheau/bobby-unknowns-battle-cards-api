@@ -52,14 +52,14 @@ class Game(models.Model):
         related_name='opponent_hand_cards',
         blank=True,
     )
-    owner_board_cards = models.ManyToManyField(
-        'CardValues',
-        related_name='owner_board_cards',
+    owner_board_card_values = models.ManyToManyField(
+        'CardValue',
+        related_name='owner_board_card_values',
         blank=True,
     )
-    opponent_board_cards = models.ManyToManyField(
-        'CardValues',
-        related_name='opponent_board_cards',
+    opponent_board_card_values = models.ManyToManyField(
+        'CardValue',
+        related_name='opponent_board_card_values',
         blank=True,
     )
     owner_graveyard_cards = models.ManyToManyField(

@@ -3,9 +3,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 
-from app.models import Deck, User, Card, Game, CardValues
+from app.models import Deck, User, Card, Game, CardValue
 from app.serializers import DeckSerializer, UserSerializer, CardSerializer, \
-    GameSerializer, CardValuesSerializer
+    GameSerializer, CardValueSerializer
 
 
 class CustomObtainAuthToken(ObtainAuthToken):
@@ -57,7 +57,7 @@ class CardViewSet(viewsets.ModelViewSet):
         'cost',
         'type',
         'health',
-        'strengh',
+        'strength',
         'effect',
     ]
 
@@ -74,18 +74,18 @@ class GameViewSet(viewsets.ModelViewSet):
     ]
 
 
-class CardValuesViewSet(viewsets.ModelViewSet):
+class CardValueViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows Card to be viewed or edited.
     """
-    queryset = CardValues.objects.all()
-    serializer_class = CardValuesSerializer
+    queryset = CardValue.objects.all()
+    serializer_class = CardValueSerializer
     filter_fields = [
         'id',
         'user',
         'card',
         'health',
-        'strengh',
+        'strength',
     ]
 
 # class Game:

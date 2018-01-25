@@ -7,7 +7,7 @@ router.register(r'decks', views.DeckViewSet)
 router.register(r'users', views.UserViewSet)
 router.register(r'cards', views.CardViewSet)
 router.register(r'games', views.GameViewSet)
-router.register(r'card-values', views.CardValuesViewSet)
+router.register(r'card-value', views.CardValueViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
