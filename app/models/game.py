@@ -24,14 +24,20 @@ class Game(models.Model):
         on_delete=models.CASCADE,
         null=True,
     )
-    owner_mana = models.IntegerField(null=True)
-    opponent_mana = models.IntegerField(null=True)
+    turn = models.IntegerField(null=True)
     player_turn = models.ForeignKey(
         'User',
         related_name='player_turn',
         on_delete=models.CASCADE,
         null=True
     )
+
+    owner_mana = models.IntegerField(null=True)
+    opponent_mana = models.IntegerField(null=True)
+
+    owner_health = models.IntegerField(null=True)
+    opponent_health = models.IntegerField(null=True)
+
     owner_deck_cards = models.ManyToManyField(
         'Card',
         related_name='owner_deck_cards',

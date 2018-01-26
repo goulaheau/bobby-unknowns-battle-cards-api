@@ -12,6 +12,7 @@ class CardValue(models.Model):
     )
     health = models.IntegerField()
     strength = models.IntegerField()
+    can_attack = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'app_card_value'

@@ -34,7 +34,8 @@ class CardValueSerializer(serializers.ModelSerializer):
             'user',
             'card',
             'health',
-            'strength'
+            'strength',
+            'can_attack'
         ]
 
 
@@ -54,9 +55,12 @@ class GameSerializer(serializers.ModelSerializer):
         model = Game
         fields = [
             'id',
+            'turn',
+            'player_turn',
             'owner_mana',
             'opponent_mana',
-            'player_turn',
+            'owner_health',
+            'opponent_health',
             'owner_deck_cards',
             'opponent_deck_cards',
             'owner_hand_cards',
