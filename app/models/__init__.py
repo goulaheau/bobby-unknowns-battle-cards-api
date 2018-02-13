@@ -7,7 +7,6 @@ from .card import Card
 from .card_admin import CardAdmin
 from .card_effect import CardEffect
 from .card_effect_admin import CardEffectAdmin
-from .card_type import CardType
 from .deck import Deck
 from .deck_admin import DeckAdmin
 from .game import Game

@@ -3,12 +3,21 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
         fields = [
             'id',
-            'username'
+            'username',
+            'password'
         ]
+
+    def create(self, validated_data):
+        new_user = super(UserSerializer, self).create(validated_data)
+        new_user.set_password(validated_data['password'])
+        new_user.save()
+        return new_user
 
 
 class CardSerializer(serializers.ModelSerializer):
@@ -22,7 +31,7 @@ class CardSerializer(serializers.ModelSerializer):
             'type',
             'health',
             'strength',
-            'effect'
+            'effect',
         ]
 
 
@@ -35,7 +44,7 @@ class CardValueSerializer(serializers.ModelSerializer):
             'card',
             'health',
             'strength',
-            'can_attack'
+            'can_attack',
         ]
 
 
@@ -46,7 +55,7 @@ class DeckSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'cards',
-            'user'
+            'user',
         ]
 
 
@@ -55,6 +64,7 @@ class GameSerializer(serializers.ModelSerializer):
         model = Game
         fields = [
             'id',
+            'rule',
             'turn',
             'player_turn',
             'owner_mana',
@@ -85,16 +95,7 @@ class CardEffectSerializer(serializers.ModelSerializer):
                 'type_affected',
                 'nb_max_affectCard',
                 'nb_affect_turn',
-                'nb_dmg'
-            ]
-
-
-class CardTypeSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = CardType
-            fields = [
-                'id',
-                'name'
+                'nb_dmg',
             ]
 
 
@@ -102,11 +103,12 @@ class GameLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = GameLog
         fields = [
+            'id',
             'winner',
-            'loser'
-            'nb_round'
-            'start_game'
-            'end_game'
+            'loser',
+            'nb_round',
+            'start_game',
+            'end_game',
         ]
 
 
@@ -114,12 +116,9 @@ class RuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rule
         fields = [
+            'id',
             'name',
-            'card_to_pick',
-            'put_card_on'
-            'max_cards_on_bord'
-            'max_attack_card_per_round'
-            'health_pts_to_loose'
-            'nb_max_cards_per_deck'
-            'nb_pv_player'
+            'players_health',
+            'cards_to_begin',
+            'cards_to_draw',
         ]

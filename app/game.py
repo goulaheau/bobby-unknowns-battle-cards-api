@@ -20,8 +20,8 @@ def action_switcher(game, user, action, payload):
 
 def action_init(game, user, payload):
     game.turn = 1
-    game.owner_health = 30
-    game.opponent_health = 30
+    game.owner_health = game.rule.players_health
+    game.opponent_health = game.rule.players_health
 
     player_turn = random.randint(0, 1)
     game.player_turn = [game.owner, game.opponent][player_turn]
@@ -38,7 +38,7 @@ def action_init(game, user, payload):
 
     game.owner_hand_cards.set([])
     game.opponent_hand_cards.set([])
-    for x in range(0, 5):
+    for x in range(0, game.rule.cards_to_begin):
         draw_card(
             game.owner_deck_cards,
             game.owner_hand_cards
@@ -259,7 +259,7 @@ def action_attack(game, user, payload):
 
 def action_end_turn(game, user, payload):
     success = True
-    card_draw = None
+    cards_drawn = []
 
     if user.id != game.player_turn.id:
         success = False
@@ -274,10 +274,13 @@ def action_end_turn(game, user, payload):
                 card_value.can_attack = True
                 card_value.save()
 
-            card_draw = draw_card(
-                game.opponent_deck_cards,
-                game.opponent_hand_cards
-            )
+            for x in range(0, game.rule.cards_to_draw):
+                card_drawn = draw_card(
+                    game.opponent_deck_cards,
+                    game.opponent_hand_cards
+                )
+                if card_drawn is not None:
+                    cards_drawn.append(card_drawn)
         else:
             game.player_turn = game.owner
             game.owner_mana = math.ceil(game.turn / 2)
@@ -287,23 +290,36 @@ def action_end_turn(game, user, payload):
                 card_value.can_attack = True
                 card_value.save()
 
-            card_draw = draw_card(
-                game.owner_deck_cards,
-                game.owner_hand_cards
-            )
+            for x in range(0, game.rule.cards_to_draw):
+                card_drawn = draw_card(
+                    game.owner_deck_cards,
+                    game.owner_hand_cards
+                )
+                if card_drawn is not None:
+                    cards_drawn.append(card_drawn)
         game.save()
 
-    return {
+    res = {
         'action': 'end_turn',
         'payload': {
             'emitter': user.id,
             'success': success,
-            'card_draw': '' if success is False else CardSerializer(card_draw).data,
         }
     }
 
+    if success:
+        cards_drawn_serialized = []
+        for card_drawn in cards_drawn:
+            cards_drawn_serialized.append(CardSerializer(card_drawn).data)
+        res['payload']['cards_drawn'] = cards_drawn_serialized
+
+    return res
+
 
 def draw_card(deck_cards, hand_cards):
+    if len(deck_cards.all()) == 0:
+        return None
+
     card_to_draw = random.randint(0, len(deck_cards.all()) - 1)
     card_to_draw = deck_cards.all()[card_to_draw]
 

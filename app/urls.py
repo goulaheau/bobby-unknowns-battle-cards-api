@@ -8,6 +8,7 @@ router.register(r'users', views.UserViewSet)
 router.register(r'cards', views.CardViewSet)
 router.register(r'games', views.GameViewSet)
 router.register(r'card-values', views.CardValueViewSet)
+router.register(r'rules', views.RuleViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

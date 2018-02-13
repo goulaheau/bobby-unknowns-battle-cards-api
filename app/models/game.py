@@ -2,6 +2,11 @@ from django.db import models
 
 
 class Game(models.Model):
+    rule = models.ForeignKey(
+        'Rule',
+        on_delete=models.CASCADE,
+        default=1
+    )
     owner = models.ForeignKey(
         'User',
         related_name='owner',

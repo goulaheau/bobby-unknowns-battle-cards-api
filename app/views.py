@@ -3,9 +3,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 
-from app.models import Deck, User, Card, Game, CardValue
+from app.models import Deck, User, Card, Game, CardValue, Rule
 from app.serializers import DeckSerializer, UserSerializer, CardSerializer, \
-    GameSerializer, CardValueSerializer
+    GameSerializer, CardValueSerializer, RuleSerializer
 
 
 class CustomObtainAuthToken(ObtainAuthToken):
@@ -20,9 +20,6 @@ class CustomObtainAuthToken(ObtainAuthToken):
 
 
 class DeckViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows Deck to be viewed or edited.
-    """
     queryset = Deck.objects.all()
     serializer_class = DeckSerializer
     filter_fields = [
@@ -34,9 +31,6 @@ class DeckViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows User to be viewed or edited.
-    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_fields = [
@@ -46,9 +40,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class CardViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows Card to be viewed or edited.
-    """
     queryset = Card.objects.all()
     serializer_class = CardSerializer
     filter_fields = [
@@ -75,9 +66,6 @@ class GameViewSet(viewsets.ModelViewSet):
 
 
 class CardValueViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows Card to be viewed or edited.
-    """
     queryset = CardValue.objects.all()
     serializer_class = CardValueSerializer
     filter_fields = [
@@ -88,17 +76,12 @@ class CardValueViewSet(viewsets.ModelViewSet):
         'strength',
     ]
 
-# class Game:
-#     player1 = {}
-#     player2 = {}
-#
-#     def start_game(self, request, player1):
-#         self.player1.mana_cristals = 0;
-#         self.player1.health = 30
-#
-#         self.player2.mana_cristals = 0;
-#         self.player2.health = 30
 
-        # self.choose_deck(player)
-
-    # def choose_deck(player):
+class RuleViewSet(viewsets.ModelViewSet):
+    queryset = Rule.objects.all()
+    serializer_class = RuleSerializer
+    filter_fields = [
+        'id',
+        'name',
+        'players_health',
+    ]

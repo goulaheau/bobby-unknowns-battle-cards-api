@@ -2,6 +2,18 @@ from django.contrib import admin
 
 
 class CardEffectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type_affected', 'nb_dmg')
-    list_filter = ['nb_dmg', 'type_affected']
+    list_display = [
+        'name',
+        'player_affected',
+        'cards_affected',
+        'type',
+        'quantity'
+    ]
+    list_filter = [
+        'name',
+        'player_affected',
+        'cards_affected',
+        'type',
+        'quantity'
+    ]
     ordering = ['name']
